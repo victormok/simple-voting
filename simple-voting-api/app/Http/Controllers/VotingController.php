@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\VotingService;
+use App\Rules\VaildHkid;
 
 class VotingController extends Controller
 {
@@ -16,7 +17,17 @@ class VotingController extends Controller
 
     public function create(Request $request)
     {
-        $this->votingService->create();
-        return 'vote';
+        $request->validate([
+            'hkid' => ['required', 'string', new VaildHkid],
+            'campaign_id' => 'required|integer',
+            'candidate_id' => 'required|integer',
+        ]);
+
+        $vote = new \stdClass();
+        $vote->hkid = $request->hkid;
+        $vote->campaign_id = $request->campaign_id;
+        $vote->candidate_id = $request->candidate_id;
+
+        return $this->votingService->create($vote);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9037dedcb537558e657baa25dc06c6dc",
+    "content-hash": "0a7712913501a7f95a7054e63fd81f01",
     "packages": [
         {
             "name": "brick/math",
@@ -896,6 +896,128 @@
                 }
             ],
             "time": "2022-10-26T14:07:24+00:00"
+        },
+        {
+            "name": "ilexn/hkid-check-digit",
+            "version": "5.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iLexN/HKID-Check-Digit.git",
+                "reference": "b000a5e4bb61d292e33108aaa66bd1ad7c8b3b36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iLexN/HKID-Check-Digit/zipball/b000a5e4bb61d292e33108aaa66bd1ad7c8b3b36",
+                "reference": "b000a5e4bb61d292e33108aaa66bd1ad7c8b3b36",
+                "shasum": ""
+            },
+            "require": {
+                "ilexn/result-option": "^0.2.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.31.0",
+                "ilexn/keep-a-change-log": "^2.0",
+                "infection/infection": "^0.25.3",
+                "phpbench/phpbench": "1.2.0",
+                "phpstan/phpstan": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "rector/rector": "0.12.5",
+                "spatie/phpunit-watcher": "^1.23",
+                "symplify/easy-coding-standard": "^9.4.70",
+                "vimeo/psalm": "^4.13"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ilex\\Validation\\HkidValidation\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "iLexN",
+                    "email": "ilex.job@gmail.com"
+                }
+            ],
+            "description": "HKID digit check",
+            "keywords": [
+                "HKID"
+            ],
+            "support": {
+                "issues": "https://github.com/iLexN/HKID-Check-Digit/issues",
+                "source": "https://github.com/iLexN/HKID-Check-Digit/tree/5.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/iLexN",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-12-03T09:10:34+00:00"
+        },
+        {
+            "name": "ilexn/result-option",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iLexN/result-option.git",
+                "reference": "c857124eef653eb4d128a23847f50c9ce0ed8d91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iLexN/result-option/zipball/c857124eef653eb4d128a23847f50c9ce0ed8d91",
+                "reference": "c857124eef653eb4d128a23847f50c9ce0ed8d91",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "infection/infection": "^0.25",
+                "phpbench/phpbench": "^1.2",
+                "phpunit/phpunit": "^9.5",
+                "rector/rector": "^0.12",
+                "vimeo/psalm": "^4.13"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ilex\\ResultOption\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "iLexN",
+                    "email": "ilex.job@gmail.com"
+                }
+            ],
+            "description": "Rust like enum Result and Option.",
+            "keywords": [
+                "enum",
+                "option",
+                "result"
+            ],
+            "support": {
+                "issues": "https://github.com/iLexN/result-option/issues",
+                "source": "https://github.com/iLexN/result-option/tree/0.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/iLexN",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-11-26T09:35:32+00:00"
         },
         {
             "name": "inertiajs/inertia-laravel",

@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
-        $schedule->command(UpdateCampaign::class, ['--schedule'])->everyTwoMinutes();
+        $schedule->command(UpdateCampaign::class)->daily();
     }
 
     /**

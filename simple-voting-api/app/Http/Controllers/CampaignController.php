@@ -44,6 +44,15 @@ class CampaignController extends Controller
     public function create(Request $request)
     {
         try {
+
+            $request->validate([
+                'admin' => 'required',
+                'description' => 'required|max:255',
+                'start' => 'required|date',
+                'end' => 'required|date',
+                'candidates' => 'required',
+            ]);
+
             $today = strtotime(date("Y-m-d"));
             $start_date =  strtotime($request->start);
             $end_date =  strtotime($request->end);
@@ -54,6 +63,7 @@ class CampaignController extends Controller
             if ($end_date < $start_date) {
                 return "End date should not be earlier than today";
             }
+            
             $campaign = new \stdClass();
 
             if ($today == $start_date) {
@@ -66,6 +76,7 @@ class CampaignController extends Controller
 
             $start_date = date_create($request->start);
             $end_date = date_create($request->end);
+
             $campaign->admin = $request->admin;
             $campaign->description = $request->description;
             $campaign->start = date_format($start_date, 'Y-m-d H:i:s');
