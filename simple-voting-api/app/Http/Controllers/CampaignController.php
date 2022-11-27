@@ -24,7 +24,7 @@ class CampaignController extends Controller
     {
         return csrf_token();
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +56,7 @@ class CampaignController extends Controller
                 'candidates' => 'required',
             ]);
 
-            $today = strtotime(date("Y-m-d"));
+            $today = strtotime(date("Y-m-d H:00:00"));
             $start_time =  strtotime($request->start);
             $end_time =  strtotime($request->end);
 
@@ -82,8 +82,8 @@ class CampaignController extends Controller
 
             $campaign->admin = $request->admin;
             $campaign->description = $request->description;
-            $campaign->start = date_format($start_time, 'Y-m-d H:i:s');
-            $campaign->end = date_format($end_time, 'Y-m-d H:i:s');
+            $campaign->start = date_format($start_time, 'Y-m-d H:00:00');
+            $campaign->end = date_format($end_time, 'Y-m-d H:00:00');
             $campaign->candidates = $request->candidates;
 
             $data = $this->campaignService->createCampaign($campaign);

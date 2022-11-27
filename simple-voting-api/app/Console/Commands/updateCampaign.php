@@ -29,13 +29,14 @@ class UpdateCampaign extends Command
      */
     public function handle()
     {
-        $today = date("Y-m-d");
+        date_default_timezone_set('Asia/Hong_Kong');
+        $todayTime = date("Y-m-d H:00:00");
 
         DB::table('campaign')
-            ->whereDate('start_time', '=', $today)
+            ->where('start_time', '=', $todayTime)
             ->update(['is_active' => 1]);
         DB::table('campaign')
-            ->whereDate('end_time', '=', $today)
+            ->where('end_time', '=', $todayTime)
             ->update(['is_active' => 0]);
 
         return Command::SUCCESS;
