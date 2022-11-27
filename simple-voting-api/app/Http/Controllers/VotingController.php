@@ -15,19 +15,26 @@ class VotingController extends Controller
         $this->votingService = $votingService;
     }
 
+    /**
+     * Create a vote.
+     */
     public function create(Request $request)
     {
-        $request->validate([
-            'hkid' => ['required', 'string', new VaildHkid],
-            'campaign_id' => 'required|integer',
-            'candidate_id' => 'required|integer',
-        ]);
+        try {
+            $request->validate([
+                'hkid' => ['required', 'string', new VaildHkid],
+                'campaign_id' => 'required|integer',
+                'candidate_id' => 'required|integer',
+            ]);
 
-        $vote = new \stdClass();
-        $vote->hkid = $request->hkid;
-        $vote->campaign_id = $request->campaign_id;
-        $vote->candidate_id = $request->candidate_id;
+            $vote = new \stdClass();
+            $vote->hkid = $request->hkid;
+            $vote->campaign_id = $request->campaign_id;
+            $vote->candidate_id = $request->candidate_id;
 
-        return $this->votingService->create($vote);
+            return $this->votingService->create($vote);
+        } catch (\Exception $e) {
+            throw new \Exception("$e");
+        }
     }
 }

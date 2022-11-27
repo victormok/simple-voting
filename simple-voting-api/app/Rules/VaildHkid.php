@@ -21,15 +21,14 @@ class VaildHkid implements InvokableRule
 
         $hkid = Helper::checkByString($value);
 
-        switch ($hkid->getReason()) {
-            case \Ilex\Validation\HkidValidation\Enum\Reason::Ok:
-                break;
-            case \Ilex\Validation\HkidValidation\Enum\Reason::PattenError:
-                echo ('Patten not match');
-                break;
-            case \Ilex\Validation\HkidValidation\Enum\Reason::DigitError:
-                echo ('Digit not match');
-                break;
-        }
+        if ($hkid->getReason())
+            switch ($hkid->getReason()) {
+                case \Ilex\Validation\HkidValidation\Enum\Reason::PattenError:
+                    $fail('hkid patten error');
+                    break;
+                case \Ilex\Validation\HkidValidation\Enum\Reason::DigitError:
+                    $fail('hkid digit error');
+                    break;
+            }
     }
 }

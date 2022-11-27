@@ -6,11 +6,8 @@ use Illuminate\Support\Facades\DB;
 
 class CampaignService
 {
-
-    // Just "public", but no "static"
     public function createCampaign($campaign)
     {
-
         $id = DB::table('campaign')->insertGetId([
             'admin' => $campaign->admin,
             'description' =>  $campaign->description,
@@ -59,7 +56,23 @@ class CampaignService
         return $activeCampaigns;
     }
 
-    public function finishedResults()
+    public function finishedResult($finishedCampaign)
     {
+        $finishedCampaign = DB::table('campaign')
+            ->select('campaign.id', 'description', 'start_time', 'end_time')
+            ->where('campaign.id', $finishedCampaign->id)
+            ->where('is_active', 0)
+            ->get()
+            ->first();
+        if (empty($finishedCampaign)) {
+            return "The campaign have not been finished";
+        }
+
+        $candidates = DB::table('candidate')
+            ->select('id', 'name')
+            ->where('campaign_id', $finishedCampaign->id)
+            ->get();
+
+        return [$finishedCampaign, $candidates];
     }
 }

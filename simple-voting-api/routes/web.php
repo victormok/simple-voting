@@ -1,11 +1,9 @@
 <?php
 
 use App\Http\Controllers\CampaignController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VotingController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +18,7 @@ use Illuminate\Support\Facades\Redirect;
 Route::get('/getCSRFToken', [CampaignController::class, 'getCSRFToken'])->name('campaign.getCSRFToken');
 
 Route::get('/campaign/allActive', [CampaignController::class, 'allActive'])->name('campaign.allActive');
-Route::get('/campaign/finishedResults', [CampaignController::class, 'finishedResults'])->name('campaign.finishedResults');
+Route::get('/campaign/finishedResult', [CampaignController::class, 'finishedResult'])->name('campaign.finishedResult');
 Route::post('/campaign/create', [CampaignController::class, 'create'])->name('campaign.create');
 
 Route::post('/voting/create', [VotingController::class, 'create'])->name('campaign.create');

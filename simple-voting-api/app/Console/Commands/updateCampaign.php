@@ -32,10 +32,10 @@ class UpdateCampaign extends Command
         $today = date("Y-m-d");
 
         DB::table('campaign')
-            ->whereDate('start_time', '=', '2022-11-26')
+            ->whereDate('start_time', '=', $today)
             ->update(['is_active' => 1]);
         DB::table('campaign')
-            ->whereDate('end_time', '=', '2022-11-30')
+            ->whereDate('end_time', '=', $today)
             ->update(['is_active' => 0]);
 
         return Command::SUCCESS;

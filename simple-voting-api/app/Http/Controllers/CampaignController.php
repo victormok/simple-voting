@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CampaignService;
+use App\Services\VotingService;
 
 class CampaignController extends Controller
 {
     private $campaignService;
+    private $votingService;
 
-    public function __construct(CampaignService $campaignService)
+    public function __construct(CampaignService $campaignService, VotingService $votingService)
     {
         $this->campaignService = $campaignService;
+        $this->votingService = $votingService;
     }
 
     /**
@@ -21,6 +24,7 @@ class CampaignController extends Controller
     {
         return csrf_token();
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -44,7 +48,6 @@ class CampaignController extends Controller
     public function create(Request $request)
     {
         try {
-
             $request->validate([
                 'admin' => 'required',
                 'description' => 'required|max:255',
@@ -54,33 +57,33 @@ class CampaignController extends Controller
             ]);
 
             $today = strtotime(date("Y-m-d"));
-            $start_date =  strtotime($request->start);
-            $end_date =  strtotime($request->end);
+            $start_time =  strtotime($request->start);
+            $end_time =  strtotime($request->end);
 
-            if ($today > $start_date) {
+            if ($today > $start_time) {
                 return "Start date should not be earlier than today";
             }
-            if ($end_date < $start_date) {
+            if ($end_time < $start_time) {
                 return "End date should not be earlier than today";
             }
-            
+
             $campaign = new \stdClass();
 
-            if ($today == $start_date) {
+            if ($today == $start_time) {
                 $campaign->is_active = 1;
             }
 
-            if ($today < $start_date) {
+            if ($today < $start_time) {
                 $campaign->is_active = 0;
             }
 
-            $start_date = date_create($request->start);
-            $end_date = date_create($request->end);
+            $start_time = date_create($request->start);
+            $end_time = date_create($request->end);
 
             $campaign->admin = $request->admin;
             $campaign->description = $request->description;
-            $campaign->start = date_format($start_date, 'Y-m-d H:i:s');
-            $campaign->end = date_format($end_date, 'Y-m-d H:i:s');
+            $campaign->start = date_format($start_time, 'Y-m-d H:i:s');
+            $campaign->end = date_format($end_time, 'Y-m-d H:i:s');
             $campaign->candidates = $request->candidates;
 
             $data = $this->campaignService->createCampaign($campaign);
@@ -92,32 +95,28 @@ class CampaignController extends Controller
     }
 
     /**
+     * Display a finished result.
      */
-    public function finishedResults()
+    public function finishedResult(Request $request)
     {
-        $this->campaignService->finishedResults();
-    }
+        $finishedCampaign = new \stdClass();
+        $finishedCampaign->id = $request->id;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        [$finishedCampaign, $candidates] = $this->campaignService->finishedResult($finishedCampaign);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $result = new \stdClass();
+        $result->campaign_id = $finishedCampaign->id;
+        $result->description = $finishedCampaign->description;
+        $result->start_time = $finishedCampaign->start_time;
+        $result->end_time = $finishedCampaign->end_time;
+
+        foreach ($candidates as $k => $v) {
+            $vote = $this->votingService->getVotes($finishedCampaign->id, $v->id);
+
+            $result->candidates["$k"]['name'] = $v->name;
+            $result->candidates["$k"]['vote_count'] = $vote->vote_count;
+        }
+
+        return $result;
     }
 }
