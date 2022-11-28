@@ -26,14 +26,13 @@ class VotingService
             return "The campaign have not active";
         }
 
-        $candidate = DB::table('candidate')
-            ->select('name')
+        $candidates = DB::table('candidate')
+            ->select('id', 'name')
             ->where('campaign_id', '=', $vote->campaign_id)
-            ->where('id', '=', $vote->candidate_id)
-            ->get()
-            ->first();
+            /*             ->where('id', '=', $vote->candidate_id) */
+            ->get();
 
-        if (empty($candidate)) {
+        if (empty($candidates)) {
             return "The candidate is not existed";
         }
 
@@ -45,14 +44,7 @@ class VotingService
             'updated_at' => new \DateTime()
         ]);
 
-        $vote = DB::table('vote')
-            ->select('campaign.description', 'candidate.name')
-            ->join('campaign', 'vote.campaign_id', '=', 'campaign.id')
-            ->join('candidate', 'vote.candidate_id', '=', 'candidate.id')
-            ->get()
-            ->first();
-
-        return $vote;
+        return $candidates;
     }
 
     /**

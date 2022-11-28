@@ -26,13 +26,25 @@ class VotingController extends Controller
                 'campaign_id' => 'required|integer',
                 'candidate_id' => 'required|integer',
             ]);
-            dd($request);
+
             $vote = new \stdClass();
             $vote->hkid = $request->hkid;
             $vote->campaign_id = $request->campaign_id;
             $vote->candidate_id = $request->candidate_id;
 
-            return $this->votingService->create($vote);
+            $candidates =  $this->votingService->create($vote);
+
+            $result = new \stdClass();
+            $result->campaign_id = $vote->campaign_id;
+
+            foreach ($candidates as $k => $v) {
+                $vote = $this->votingService->getVotes($result->campaign_id, $v->id);
+
+                $result->candidates["$k"]['id'] = $v->id;
+                $result->candidates["$k"]['name'] = $v->name;
+                $result->candidates["$k"]['vote_count'] = $vote->vote_count;
+            }
+            return $result;
         } catch (\Exception $e) {
             throw new \Exception("$e");
         }

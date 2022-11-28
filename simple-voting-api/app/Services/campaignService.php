@@ -68,7 +68,7 @@ class CampaignService
         date_default_timezone_set('Asia/Hong_Kong');
 
         $now_time = strtotime(date("Y-m-d H:i:s"));
-    
+
         $finishedCampaign = DB::table('campaign')
             ->select('campaign.id', 'description', 'start_time', 'end_time')
             ->where('campaign.id', $finishedCampaign->id)
