@@ -102,6 +102,10 @@ class CampaignController extends Controller
 
         [$finishedCampaign, $candidates] = $this->campaignService->finishedResult($finishedCampaign);
 
+        if ($finishedCampaign == null) {
+            return "The campaign has not been finished";
+        }
+
         $result = new \stdClass();
         $result->campaign_id = $finishedCampaign->id;
         $result->description = $finishedCampaign->description;

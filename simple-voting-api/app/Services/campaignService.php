@@ -76,14 +76,13 @@ class CampaignService
             ->get()
             ->first();
         if (empty($finishedCampaign)) {
-            return "The campaign have not been finished";
+            return null;
         }
 
         $candidates = DB::table('candidate')
             ->select('id', 'name')
             ->where('campaign_id', $finishedCampaign->id)
             ->get();
-
         return [$finishedCampaign, $candidates];
     }
 }
