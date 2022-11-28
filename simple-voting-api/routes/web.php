@@ -17,9 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/getCSRFToken', [CampaignController::class, 'getCSRFToken'])->name('campaign.getCSRFToken');
 
-Route::get('/campaign/allActive', [CampaignController::class, 'allActive'])->name('campaign.allActive');
-Route::get('/campaign/finishedResult', [CampaignController::class, 'finishedResult'])->name('campaign.finishedResult');
-Route::post('/campaign/create', [CampaignController::class, 'create'])->name('campaign.create');
+Route::controller(CampaignController::class)->group(function () {
+    Route::get('/getCSRFToken', 'getCSRFToken');
+
+    Route::get('/campaign/allActive', 'allActive');
+    Route::get('/campaign/{id}', 'finishedResult');
+    Route::post('/campaign/create', 'create');
+});
 
 Route::post('/voting/create', [VotingController::class, 'create'])->name('campaign.create');
 

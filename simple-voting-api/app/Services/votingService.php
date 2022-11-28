@@ -11,10 +11,14 @@ class VotingService
      */
     public function create($vote)
     {
+        date_default_timezone_set('Asia/Hong_Kong');
+
+        $now_time = strtotime(date("Y-m-d H:i:s"));
         $campaign = DB::table('campaign')
             ->select('description')
             ->where('id', '=', $vote->campaign_id)
-            ->where('is_active', 1)
+            ->where('start_time', '<', $now_time)
+            ->where('end_time', '>', $now_time)
             ->get()
             ->first();
 

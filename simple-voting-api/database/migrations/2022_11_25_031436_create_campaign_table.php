@@ -17,9 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('admin', 24);
             $table->string('description', 255);
-            $table->boolean('is_active');
-            $table->datetime('start_time');
-            $table->datetime('end_time');
+            $table->integer('start_time');
+            $table->integer('end_time');
             $table->timestamps();
         });
     }

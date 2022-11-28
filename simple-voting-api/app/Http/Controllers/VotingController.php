@@ -22,11 +22,11 @@ class VotingController extends Controller
     {
         try {
             $request->validate([
-                'hkid' => ['required', 'string', new VaildHkid],
+                'hkid' => ['required', 'string', /* new VaildHkid */],
                 'campaign_id' => 'required|integer',
                 'candidate_id' => 'required|integer',
             ]);
-
+            dd($request);
             $vote = new \stdClass();
             $vote->hkid = $request->hkid;
             $vote->campaign_id = $request->campaign_id;

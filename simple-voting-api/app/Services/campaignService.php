@@ -8,12 +8,13 @@ class CampaignService
 {
     public function createCampaign($campaign)
     {
+        date_default_timezone_set('Asia/Hong_Kong');
+
         $id = DB::table('campaign')->insertGetId([
             'admin' => $campaign->admin,
             'description' =>  $campaign->description,
-            'start_time' =>  $campaign->start,
-            'end_time' =>  $campaign->end,
-            'is_active' => $campaign->is_active,
+            'start_time' =>  $campaign->start_time,
+            'end_time' =>  $campaign->end_time,
             'created_at' => new \DateTime(),
             'updated_at' => new \DateTime()
         ]);
@@ -41,10 +42,16 @@ class CampaignService
 
     public function getAllActiveCampaign()
     {
+        date_default_timezone_set('Asia/Hong_Kong');
+
+        $now_time = strtotime(date("Y-m-d H:i:s"));
+
         $activeCampaigns = DB::table('campaign')
             ->select('id', 'description', 'start_time', 'end_time')
-            ->where('is_active', 1)
+            ->where('start_time', '<', $now_time)
+            ->where('end_time', '>', $now_time)
             ->get();
+
         foreach ($activeCampaigns as $k => $v) {
             $candidate = DB::table('candidate')
                 ->select('name')
@@ -58,10 +65,14 @@ class CampaignService
 
     public function finishedResult($finishedCampaign)
     {
+        date_default_timezone_set('Asia/Hong_Kong');
+
+        $now_time = strtotime(date("Y-m-d H:i:s"));
+    
         $finishedCampaign = DB::table('campaign')
             ->select('campaign.id', 'description', 'start_time', 'end_time')
             ->where('campaign.id', $finishedCampaign->id)
-            ->where('is_active', 0)
+            ->where('end_time', '<', $now_time)
             ->get()
             ->first();
         if (empty($finishedCampaign)) {
