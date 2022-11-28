@@ -21,7 +21,7 @@ Route::controller(CampaignController::class)->group(function () {
     Route::get('/getCSRFToken', 'getCSRFToken');
 
     Route::get('/campaign/allActive', 'allActive');
-    Route::get('/campaign/{id}', 'finishedResult');
+    Route::get('/campaign/finishedResult/{id}', 'finishedResult');
     Route::post('/campaign/create', 'create');
 });
 

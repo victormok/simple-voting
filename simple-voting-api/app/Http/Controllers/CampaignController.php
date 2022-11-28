@@ -26,14 +26,33 @@ class CampaignController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the active campaign with votes.
      *
      * @return \Illuminate\Http\Response
      */
     public function allActive()
     {
         try {
-            return $this->campaignService->getAllActiveCampaign();
+            $activeCampaigns = $this->campaignService->getAllActiveCampaign();
+
+            $results = [];
+
+            foreach ($activeCampaigns as $campaignKey => $activeCampaign) {
+                $results["$campaignKey"]["id"] = $activeCampaign->id;
+                $results["$campaignKey"]["description"] = $activeCampaign->description;
+                $results["$campaignKey"]["start_time"] = $activeCampaign->start_time;
+                $results["$campaignKey"]["end_time"] = $activeCampaign->end_time;
+                foreach ($activeCampaign->candidates as $candidateKey => $candidate) {
+
+                    $vote = $this->votingService->getVotes($activeCampaign->id, $candidate->id);
+
+                    $results["$campaignKey"]["candidates"]["$candidateKey"]["id"] = $candidate->id;
+                    $results["$campaignKey"]["candidates"]["$candidateKey"]["name"] = $candidate->name;
+                    $results["$campaignKey"]["candidates"]["$candidateKey"]["vote_count"] = $vote->vote_count;
+                }
+            }
+
+            return $results;
         } catch (\Exception $e) {
             throw new \Exception("$e");
         }

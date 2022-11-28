@@ -54,9 +54,10 @@ class CampaignService
 
         foreach ($activeCampaigns as $k => $v) {
             $candidate = DB::table('candidate')
-                ->select('name')
+                ->select('id', 'name')
                 ->where('campaign_id', $v->id)
                 ->get();
+
             $activeCampaigns[$k]->candidates = $candidate;
         }
 
