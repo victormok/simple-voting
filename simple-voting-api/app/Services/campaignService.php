@@ -32,10 +32,12 @@ class CampaignService
             ->get();
 
         $candidate = DB::table('candidate')
-            ->select('name')
+            ->select('id', 'name')
             ->where('campaign_id', $id)
             ->get();
         $createdCampaign[0]->candidates = $candidate;
+        $createdCampaign[0]->start_time = date('Y-m-d H:i:s', $createdCampaign[0]->start_time);
+        $createdCampaign[0]->end_time = date('Y-m-d H:i:s', $createdCampaign[0]->end_time);
 
         return $createdCampaign;
     }

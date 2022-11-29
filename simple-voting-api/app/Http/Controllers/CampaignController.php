@@ -128,8 +128,8 @@ class CampaignController extends Controller
         $result = new \stdClass();
         $result->campaign_id = $finishedCampaign->id;
         $result->description = $finishedCampaign->description;
-        $result->start_time = $finishedCampaign->start_time;
-        $result->end_time = $finishedCampaign->end_time;
+        $result->start_time = date('Y-m-d H:i:s', $finishedCampaign->start_time);
+        $result->end_time = date('Y-m-d H:i:s', $finishedCampaign->end_time);
 
         foreach ($candidates as $k => $v) {
             $vote = $this->votingService->getVotes($finishedCampaign->id, $v->id);
