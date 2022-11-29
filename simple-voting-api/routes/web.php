@@ -15,17 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/getCSRFToken', [CampaignController::class, 'getCSRFToken'])->name('campaign.getCSRFToken');
 
 Route::controller(CampaignController::class)->group(function () {
-    Route::get('/getCSRFToken', 'getCSRFToken');
+    Route::get('/api/getCSRFToken', 'getCSRFToken');
 
-    Route::get('/campaign/allActive', 'allActive');
-    Route::get('/campaign/finishedResult/{id}', 'finishedResult');
-    Route::post('/campaign/create', 'create');
+    Route::get('/api/campaign/allActive', 'allActive');
+    Route::get('/api/campaign/finishedResult/{id}', 'finishedResult');
+    Route::post('/api/campaign/create', 'create');
 });
 
-Route::post('/voting/create', [VotingController::class, 'create'])->name('campaign.create');
+Route::post('/api/voting/create', [VotingController::class, 'create'])->name('campaign.create');
 
 
 require __DIR__ . '/auth.php';
